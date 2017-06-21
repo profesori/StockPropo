@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr" ng-app="stockPropo">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock de Propositions</title>
+    <link rel="stylesheet" href="app.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Angular Material-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+
+
+  </head>
+  <body >
+
+    <div ng-view></div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+
+    <!--toArray filter -->
+    <script src="bower_components/angular-toArrayFilter/toArrayFilter.js"></script>
+
+    <!--ngMap
+    <script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>-->
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <script src="espace/espace.module.js"></script>
+    <script src="espace/espace.component.js"></script>
+    <script src="auth/auth.module.js"></script>
+    <script src="auth/auth.component.js"></script>
+    <script src="propo/propo.module.js"></script>
+    <script src="propo/propo.component.js"></script>
+
+      <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
+    <!--Core Modules-->
+    <script src="core/core.module.js"></script>
+    <script src="core/message/message.module.js"></script>
+    <script src="core/message/message.service.js"></script>
+    <script src="core/propos/propos.module.js"></script>
+    <script src="core/propos/propos.service.js"></script>
+    <script src="core/raisons/raisons.module.js"></script>
+    <script src="core/raisons/raisons.service.js"></script>
+    <script src="core/auth/auth.module.js"></script>
+    <script src="core/auth/auth.service.js"></script>
+    <script src="directives/upload.directive.js"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDVoD5qYnnoRgSNfFx9vljaq4A1COnl2CY",
+        authDomain: "stock-de-propositions.firebaseapp.com",
+        databaseURL: "https://stock-de-propositions.firebaseio.com",
+        storageBucket: "stock-de-propositions.appspot.com",
+        messagingSenderId: "165323456277"
+      };
+      firebase.initializeApp(config);
+    </script>
+<!--
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAQ2FiojiexC8eDOZIRAbVM6zkSchuT0WE",
+      authDomain: "stock-de-proposition.firebaseapp.com",
+      databaseURL: "https://stock-de-proposition.firebaseio.com",
+      projectId: "stock-de-proposition",
+      storageBucket: "stock-de-proposition.appspot.com",
+      messagingSenderId: "1027959788249"
+    };
+    firebase.initializeApp(config);
+    </script>
+-->
+  </body>
+</html>

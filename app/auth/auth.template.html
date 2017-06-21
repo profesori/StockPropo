@@ -1,0 +1,37 @@
+<div class="login-frame" ui-view="" flex layout="row">
+  <div layout="row" flex="" layout-padding="" layout-fill="" layout-align="center center" class="ng-scope">
+    <div flex flex-lg="50" flex-md="70" flex-sm="100">
+      <md-card class="md-cyan-theme">
+        <md-toolbar class="md-cyan-theme" layout-padding>
+          <div layout="column" layout-align="center" class="padding-20 text-center">
+            <h1 layout="row" layout-align="center center" class="md-headline ng-scope" translate="">Authentification</h1>
+          </div>
+        </md-toolbar>
+        <md-content class="md-padding md-cyan-theme">
+          <form name="login" layout="column">
+            <md-input-container>
+              <label>Email</label>
+              <input name="username" ng-model="user.email" type="text" required>
+            </md-input-container>
+            <md-input-container>
+              <label>Mot de passe</label>
+              <input ng-model="user.password" type="password" required>
+            </md-input-container>
+            <md-dialog-actions layout="column" layout-align="center">
+              <md-button class="md-raised md-primary" layout="row" layout-align="center center" ng-click="loginUser($event)">
+                Entrer
+              </md-button>
+            </md-dialog-actions>
+          </form>
+        </md-content>
+        <!--
+        <div layout="row" layout-align="center center">
+            <p>Or</p>
+        </div>
+        <md-button  layout="row" layout-align="center center" ng-click="googleLogin($event)">
+           <img class="png-icon" src="auth\btn_google_signin_light_normal_web@2x.png" >
+        </md-button>-->
+      </md-card>
+    </div>
+  </div>
+</div>

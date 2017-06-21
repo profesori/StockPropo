@@ -1,0 +1,75 @@
+
+
+<style>
+pre {
+    display: block;
+    font-family: Times New Roman;
+    white-space: pre-line;
+    margin: 0em 0;
+}
+</style>
+<md-dialog aria-label="Chat DLG" flex="40">
+  <form ng-cloak>
+    <md-toolbar class="md-tall">
+
+      <div class="md-toolbar-tools">
+
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon ng-click="">close</md-icon>
+        </md-button>
+      </div>
+      <span flex md-truncate style="padding:15px">{{titreRaison}}<br>{{texteRaison}}</span>
+    </md-toolbar>
+
+    <md-dialog-content scroll-to-bottom="messages" >
+    <div class="md-dialog-content">
+        <md-list style="height: 350px;" >
+          <md-list-item ng-disabled="true" class="md-3-line md-long-text"  ng-repeat="message in messages" >
+            <img ng-src="{{message.redacteur ? 'images/rm.png' : 'images/dm.png'}}" class="md-avatar" alt="" flex-order="{{user.Nom==message.expediteur ? '2' : '0'}}" />
+            <md-card md-colors="::{backgroundColor: 'grey-300'}" style="max-width: 300px" flex-order="{{user.Nom==message.expediteur ? '1' : '0'}}">
+
+              <md-card-header>
+                <md-card-header-text>
+                  <div ng-if="!message.isImage">
+                    <span  class="md-title">{{message.expediteur}}</span >
+                    <span  class="md-subhead"><pre>{{message.message}}</pre></span>
+                    <span  class="md-subhead"><i>{{message.time | date:'dd-MM-yyyy HH:mm:ss '}}</i></span>
+                  </div>
+
+                  <div ng-if="message.isImage">
+                    <span  class="md-title">{{message.expediteur}}</span >
+                      <div layout="row" layout-sm="column" layout-align="space-around" ng-if="!message.message">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                      </div>
+                      <a target="_blank" ng-href="{{message.message}}">
+                        <img ng-if="!message.isPDF" ng-src="{{message.message}}" class="md-card-image" alt=""/>
+                        <div ng-if="message.message && message.isPDF">Voir Document</div>
+                      </a>
+                    <span  class="md-subhead"><i>{{message.time | date:'dd-MM-yyyy HH:mm:ss '}}</i></span>
+                  </div>
+                </md-card-header-text>
+              </md-card-header>
+            </md-card>
+            <hr>
+          </md-list-item>
+        </md-list>
+
+      </div>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row" ng-show="!isPiocelle">
+      <md-input-container md-no-float flex style="margin:0">
+          <textarea md-no-resize placeholder="Message" ng-model="chat.message" rows="2" md-select-on-focus style="white-space: normal !important;"></textarea>
+      </md-input-container>
+
+        <md-button class="md-icon-button">
+          <md-icon ng-click="AddMessage(idraison)">send</md-icon>
+        </md-button>
+        <md-button class="md-icon-button">
+          <file-upload on-change="onChange">
+          </file-upload>
+        </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

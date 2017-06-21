@@ -1,0 +1,118 @@
+<div layout="column" layout-wrap flex >
+  <md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+        <md-icon >menu</md-icon>
+      </md-button>
+      <md-truncate>La liste des propositions non saisissables pour {{delegue.Nom}}</md-truncate>
+      <span flex></span>
+      <md-truncate>{{isRedacteur ? redacteur.Nom : ""}}</md-truncate>
+      <md-menu md-position-mode="target-right target">
+      <md-button aria-label="Open menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+         <md-icon>account_circle</md-icon>
+       </md-button>
+       <md-menu-content>
+         <md-menu-item>
+           <md-button ng-click="logout()">
+             Logout
+           </md-button>
+         </md-menu-item>
+       </md-menu-content>
+     </md-menu>
+
+    </div>
+  </md-toolbar>
+  <div class="md-padding" layout="column"  ng-show="isRedacteur">
+    <div >
+       <md-checkbox  ng-model="redacteur.enconge" ng-change="redacteurEnConge()" aria-label="Checkbox 1">
+         En Congé
+       </md-checkbox>
+     </div>
+
+      <md-input-container flex  ng-show=" !redacteur.enconge">
+       <label>Délégués</label>
+       <md-select ng-model="deleg" md-selected-text="selectDelegue()">
+           <md-option ng-value="dlg.$key" ng-repeat="(key,dlg) in LISTE_DELEGUE | toArray | orderBy:'Nom'">{{dlg.Nom}}</md-option>
+       </md-select>
+     </md-input-container>
+
+
+  </div>
+   <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap  ng-show="(!nodataAssoc || !nodata) && !(redacteur.enconge && isRedacteur)"  md-colors="::{backgroundColor: 'grey-300'}" style="overflow:hidden">
+    <div layout="column"  style="width:100%">
+        <h3>Transférées</h3>
+        <div layout="row" layout-xs="column" flex ng-show="!nodataAssoc" style="flex-wrap:wrap;">
+         <div  ng-repeat="propo in proposAssocie" flex-gt-sm="33" flex="75" flex-xs="75">
+          <md-card  md-theme="default" md-theme-watch md-colors="::{backgroundColor: 'blue-300'}" >
+           <md-card-title>
+             <md-card-title-text>
+               <span class="md-headline">{{propo.nomRaiSoc}}</span>
+               <span class="md-subhead"><strong>Code Soc :</strong> {{propo.scodeSoc}}</span>
+               <span class="md-subhead"><strong>Délégué :</strong> {{propo.delegue}}</span>
+               <span class="md-subhead">Police <strong>{{propo.numeroPolice}} {{propo.typePolice}}</strong> situé à <br> <a target="_blank" ng-href="http://maps.google.com/?q={{propo.adressePolice}}">{{propo.adressePolice}}</a></span>
+             </md-card-title-text>
+           </md-card-title>
+           <md-card-content>
+             <md-list  flex>
+               <md-subheader   md-colors="::{backgroundColor: 'blue-300'}">Raisons de refus</md-subheader>
+                <md-list-item ng-disabled="true" ng-click="selection($event)" class="secondary-button-padding md-3-line md-long-text" ng-repeat="raison in raisons[propo.$id]">
+                 <md-checkbox ng-disabled="!isRedacteur || isPiocelle" ng-model="raison.valide" ng-change="showConfirm($event,propo.$id,raison)"></md-checkbox>
+                  <div class="md-list-item-text">
+                   <p><strong>{{raison.titreRaison}}</strong></p>
+                    <p>
+                      {{raison.texteRaison}}
+                    </p>
+                  </div>
+                  <md-button class="md-icon-button" ng-if="(isRedacteur && raison.bdlg_new)||(!isRedacteur && raison.brdct_new)">
+                    <md-icon  md-colors="{color: 'red-500'}" ng-click="showAdvanced($event,raison.$id,propo.$id,raison)">message</md-icon>
+                  </md-button>
+                  <md-button class="md-icon-button" ng-if="(isRedacteur && !raison.bdlg_new)||(!isRedacteur && !raison.brdct_new)">
+                    <md-icon  ng-click="showAdvanced($event,raison.$id,propo.$id,raison)">message</md-icon>
+                  </md-button>
+                </md-list-item>
+             </md-list>
+           </md-card-content>
+         </md-card>
+         </div>
+       </div>
+     <hr>
+      <h3>Les propos de {{delegue.Nom}}</h3>
+         <div layout="row" layout-xs="column" layout-sm="column" style="flex-wrap:wrap;">
+          <div  ng-repeat="propo in propos" flex-gt-sm="33" flex="75" flex-xs="75">
+             <md-card  md-theme="default" md-theme-watch>
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">{{propo.nomRaiSoc}}</span>
+                  <span class="md-subhead"><strong>Code Soc :</strong> {{propo.scodeSoc}}</span>
+                  <span class="md-subhead">Police <strong>{{propo.numeroPolice}} {{propo.typePolice}}</strong> situé à <br> <a target="_blank" ng-href="http://maps.google.com/?q={{propo.adressePolice}}">{{propo.adressePolice}}</a></span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-content>
+                <md-list  flex>
+                  <md-subheader  class="md-no-sticky">Raisons de refus</md-subheader>
+                   <md-list-item ng-disabled="true" ng-click="selection($event)" class="secondary-button-padding md-3-line md-long-text" ng-repeat="raison in raisons[propo.$id]">
+                    <md-checkbox ng-disabled="!isRedacteur || isPiocelle" ng-model="raison.valide" ng-change="showConfirm($event,propo.$id,raison)"></md-checkbox>
+                     <div class="md-list-item-text">
+                      <p><strong>{{raison.titreRaison}}</strong></p>
+                       <p>
+                         {{raison.texteRaison}}
+                       </p>
+                     </div>
+                     <md-button class="md-icon-button" ng-if="(isRedacteur && raison.bdlg_new)||(!isRedacteur && raison.brdct_new)">
+                       <md-icon  md-colors="{color: 'red-500'}" ng-click="showAdvanced($event,raison.$id,propo.$id,raison)">message</md-icon>
+                     </md-button>
+                     <md-button class="md-icon-button" ng-if="(isRedacteur && !raison.bdlg_new)||(!isRedacteur && !raison.brdct_new)">
+                       <md-icon  ng-click="showAdvanced($event,raison.$id,propo.$id,raison)">message</md-icon>
+                     </md-button>
+                   </md-list-item>
+                </md-list>
+              </md-card-content>
+            </md-card>
+        </div>
+      </div>
+  </div>
+  </md-content>
+  <div layout="row" layout-align="space-around center" ng-show="nodata || (redacteur.enconge && isRedacteur)">
+    <h1>{{isRedacteur && redacteur.enconge ? 'Vous êtes en congé' : 'Pas de proposition non saisissable pour ce délégué'}}</h1>
+  </div>
+</div>

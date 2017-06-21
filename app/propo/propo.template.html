@@ -1,0 +1,51 @@
+<div layout="column" layout-wrap flex >
+  <md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+        <md-icon >menu</md-icon>
+      </md-button>
+      <md-truncate>Historique de la propo {{propo.numeroPolice}}</md-truncate>
+      <span flex></span>
+      <md-truncate>{{user.Nom}}</md-truncate>
+    </div>
+  </md-toolbar>
+
+   <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap  ng-show="!nodata"  md-colors="::{backgroundColor: 'grey-300'}" style="overflow:hidden">
+    <div layout="column">
+      <h3>La propo</h3>
+         <div layout="row" layout-xs="column" layout-sm="column" style="flex-wrap:wrap;">
+          <div  flex-xs="90" flex-sm="90" >
+             <md-card  md-theme="default" md-theme-watch>
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">{{propo.nomRaiSoc}}</span>
+                  <span class="md-subhead"><strong>Code Soc :</strong> {{propo.scodeSoc}}</span>
+                  <span class="md-subhead">Police <strong>{{propo.numeroPolice}} {{propo.typePolice}}</strong> situé à <br> <a target="_blank" ng-href="http://maps.google.com/?q={{propo.adressePolice}}">{{propo.adressePolice}}</a></span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-content>
+                <md-list  flex>
+                  <md-subheader  class="md-no-sticky">Raisons de refus</md-subheader>
+                   <md-list-item ng-disabled="true" ng-click="selection($event)" class="secondary-button-padding md-3-line md-long-text" ng-repeat="raison in raisons[propo.$id]">
+                    <md-checkbox ng-disabled="!isRedacteur" ng-model="raison.valide" ng-change="showConfirm($event,propo.$id,raison)"></md-checkbox>
+                     <div class="md-list-item-text">
+                      <p><strong>{{raison.titreRaison}}</strong></p>
+                       <p>
+                         {{raison.texteRaison}}
+                       </p>
+                     </div>
+                     <md-button class="md-icon-button" >
+                       <md-icon  ng-click="showAdvanced($event,raison.$id,propo.$id,raison)">message</md-icon>
+                     </md-button>
+                   </md-list-item>
+                </md-list>
+              </md-card-content>
+            </md-card>
+        </div>
+      </div>
+  </div>
+  </md-content>
+  <div layout="row" layout-align="space-around center" ng-show="nodata">
+    <h1>La propo n'a pas d'historqiue</h1>
+  </div>
+</div>
